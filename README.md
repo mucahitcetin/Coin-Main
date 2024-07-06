@@ -34,5 +34,5 @@ https://coin-main.netlify.app/
 
 1. git clone
 2. npm install
-3. npm test
+3. npm run test
 4. npm run dev
