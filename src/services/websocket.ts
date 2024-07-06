@@ -4,7 +4,7 @@ export const subscribeToTicker = (
   symbol: string,
   callback: (data: any) => void
 ) => {
-  const ws = new WebSocket(`${BASE_WS_URL}/${symbol}@ticker`);
+  const ws = new WebSocket(`${BASE_WS_URL}/${symbol.toLowerCase()}@ticker`);
 
   ws.onopen = () => {
     console.log("WebSocket connection established");

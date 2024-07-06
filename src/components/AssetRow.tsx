@@ -1,3 +1,5 @@
+// AssetRow.tsx
+
 import React, { useEffect, useState } from "react";
 import { subscribeToTicker } from "../services/websocket";
 import SparklineChart from "./SparklineChart";
@@ -5,13 +7,12 @@ import millify from "millify";
 import formatNumber from "../utils/formatNumber";
 import { Asset } from "../types";
 import { GoArrowDownRight, GoArrowUpRight } from "react-icons/go";
+import parseSymbol from "../utils/parseSymbol";
+import Symbol from "./Symbol";
 
 interface AssetRowProps {
   asset: Asset;
 }
-const Symbol = () => {
-  return <span className="text-gray-400 text-xs font-[500] ps-1">USDT</span>;
-};
 
 const AssetRow: React.FC<AssetRowProps> = ({ asset }) => {
   const [price, setPrice] = useState(asset.lastPrice);
@@ -20,16 +21,17 @@ const AssetRow: React.FC<AssetRowProps> = ({ asset }) => {
   const [priceClass, setPriceClass] = useState("");
   const [sparklineData, setSparklineData] = useState<number[]>([]);
 
+  const { coin, currency } = parseSymbol(asset.symbol);
+
   useEffect(() => {
     const unsubscribe = subscribeToTicker(
       asset.symbol.toLowerCase(),
       (data) => {
-        console.log(data);
         setPriceClass(data.p > price ? "text-green-500" : "text-red-500");
-        setPrice(data.p);
+        setPrice(data.c);
         setMarketValue(data.q);
         setChange(data.P);
-        setSparklineData((prevData) => [...prevData, data.p].slice(-24));
+        setSparklineData((prevData) => [...prevData, data.c].slice(-24));
         setTimeout(() => setPriceClass(""), 1000);
       }
     );
@@ -49,20 +51,18 @@ const AssetRow: React.FC<AssetRowProps> = ({ asset }) => {
   };
 
   return (
-    <tr>
+    <tr className="py-2 hover:bg-gray-200 transition-colors duration-300">
       <td className="py-4">
-        <span className="font-semibold">{asset.symbol}</span>
-        <span className="text-gray-400 font-medium max-sm:hidden ps-1">
-          / USDT
-        </span>
+        <span className="font-semibold">{coin}</span>
+        <Symbol currency={currency} />
       </td>
       <td className={`ps-5 py-2 text-right font-semibold ${priceClass}`}>
         {formatNumber(price)}
-        <Symbol />
+        <Symbol currency={currency} />
       </td>
       <td className="py-2 text-right font-semibold">
         {millify(+marketValue)}
-        <Symbol />
+        <Symbol currency={currency} />
       </td>
       <td className={`py-2 font-semibold ${getColorClass(+change)} text-right`}>
         {getArrowIcon(+change)}
