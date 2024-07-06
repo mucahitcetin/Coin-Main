@@ -1,5 +1,3 @@
-// AssetRow.tsx
-
 import React, { useEffect, useState } from "react";
 import { subscribeToTicker } from "../services/websocket";
 import SparklineChart from "./SparklineChart";
