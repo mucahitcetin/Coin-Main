@@ -50,7 +50,7 @@ const AssetRow: React.FC<AssetRowProps> = ({ asset }) => {
 
   return (
     <tr className="py-2 hover:bg-gray-200 transition-colors duration-300">
-      <td className="py-4">
+      <td className="py-4 pl-4">
         <span className="font-semibold">{coin}</span>
         <Symbol currency={currency} />
       </td>

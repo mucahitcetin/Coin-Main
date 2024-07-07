@@ -27,10 +27,10 @@ const AssetTable: React.FC = () => {
 
   return (
     <div className="overflow-x-auto p-4 md:p-8 min-h-screen  md:grid md:place-items-center container mx-auto">
-      <table className="min-w-full ">
+      <table className="min-w-full bg-white border border-gray-200">
         <thead className=" rounded-md ">
           <tr>
-            <th className="py-3 text-left text-xs font-semibold text-gray-400 tracking-wider w-1/2">
+            <th className="py-3 text-left text-xs font-semibold text-gray-400 tracking-wider w-1/2 pl-4">
               Crypto
             </th>
             <th className="ps-4 md:ps-8 py-3 text-right text-xs font-semibold text-gray-400  tracking-wider">
